@@ -1,19 +1,18 @@
 <?php
 session_start();
 
-// Update quantity functionality
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_cart'])) {
     foreach ($_POST['quantity'] as $index => $new_quantity) {
-        $_SESSION['cart'][$index]['quantity'] = max(1, (int)$new_quantity); // Ensure quantity is at least 1
+        $_SESSION['cart'][$index]['quantity'] = max(1, (int)$new_quantity); 
     }
     header("Location: cart.php");
     exit();
 }
 
-// Remove an individual item
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_item'])) {
     $index_to_remove = (int)$_POST['remove_item'];
-    array_splice($_SESSION['cart'], $index_to_remove, 1); // Remove the item by index
+    array_splice($_SESSION['cart'], $index_to_remove, 1); 
     header("Location: cart.php");
     exit();
 }
@@ -168,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_item'])) {
 <body>
 
 <header>
-    <!-- Navbar -->
+
     <nav>
         <div>
             <a href="dashboard.php"><img src="../assets/images/picture1.jpg" alt="Logo"></a>
@@ -202,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_item'])) {
                     <?php
                     $total_price = 0;
                     foreach ($_SESSION['cart'] as $index => $item):
-                        // Simulated price for each service
+                       
                         $price_per_item = ($item['service_name'] === "Cucian Biasa") ? 3.50 : 8.00;
                         $item_total = $price_per_item * $item['quantity'];
                         $total_price += $item_total;
@@ -246,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_item'])) {
     <?php endif; ?>
 </div>
 
-<!-- Footer -->
+
 <footer>
     <p>&copy; 2025 SM Company. All rights reserved.</p>
 </footer>

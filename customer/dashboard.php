@@ -1,33 +1,32 @@
 <?php
 session_start();
-include('../includes/db.php'); // Database connection
+include('../includes/db.php'); 
 
-// Initialize the cart array if not already set
+
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-// Initialize the message variable
 $message = '';
 
-// Check if the Add to Cart form was submitted
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
-    // Get form data
+   
     $service_name = $_POST['service_name'];
     $quantity = (int)$_POST['quantity'];
 
-    // Check if the item is already in the cart
+    
     $item_found = false;
     foreach ($_SESSION['cart'] as &$item) {
         if ($item['service_name'] === $service_name) {
-            $item['quantity'] += $quantity; // Update quantity if item exists
+            $item['quantity'] += $quantity;
             $item_found = true;
             break;
         }
     }
-    unset($item); // Unset reference to prevent unexpected behavior
+    unset($item);
 
-    // If item is not already in the cart, add it as a new entry
+    
     if (!$item_found) {
         $_SESSION['cart'][] = [
             'service_name' => $service_name,
@@ -35,21 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         ];
     }
 
-    // Set the success message
+ 
     $message = 'Services added to cart!';
 
-    // Store this flag in session to display the popup
+  
     $_SESSION['show_popup'] = true;
 
-    // Redirect back to the same page to prevent resubmission
+   
     header("Location: dashboard.php");
     exit();
 }
 
-// Check if the popup should be shown
+
 $show_popup = isset($_SESSION['show_popup']) ? $_SESSION['show_popup'] : false;
 
-// After showing the popup, unset the session variable to prevent it from showing again
+
 if ($show_popup) {
     unset($_SESSION['show_popup']);
 }
@@ -64,7 +63,7 @@ if ($show_popup) {
     <link rel="stylesheet" href="../assets/css/style.css">
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Increase quantity
+            
             document.querySelectorAll('.increase-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const input = button.previousElementSibling;
@@ -73,7 +72,7 @@ if ($show_popup) {
                 });
             });
 
-            // Decrease quantity
+            
             document.querySelectorAll('.decrease-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const input = button.nextElementSibling;
@@ -82,7 +81,7 @@ if ($show_popup) {
                 });
             });
 
-            // Show popup when service added to cart
+            
             <?php if ($show_popup): ?>
                 document.getElementById('popup').style.display = 'block';
             <?php endif; ?>
@@ -104,7 +103,7 @@ body::before {
     height: 100%;
     background: url('../assets/images/bg5.jpg') no-repeat center center fixed;
     background-size: cover;
-    filter: blur(10px); /* Adjust the blur intensity here */
+    filter: blur(10px); 
     z-index: -1;
 }
 
@@ -153,7 +152,7 @@ h1 {
 }
 
 .service-card {
-    background: #ffffff; /* Solid white color */
+    background: #ffffff; 
     padding: 20px;
     border-radius: 10px;
     width: 250px;
@@ -163,7 +162,7 @@ h1 {
 }
 
 .service-card:hover {
-    transform: scale(1.05); /* Hover effect */
+    transform: scale(1.05); 
 }
 
 .service-card img {
@@ -181,7 +180,7 @@ h1 {
 
 .service-card p {
     font-size: 18px;
-    color: #131512; /* Golden color for price */
+    color: #131512; 
 }
 
 .quantity-controls {
@@ -191,8 +190,8 @@ h1 {
 }
 
 .quantity-controls button {
-    background-color: #131512; /* Set the button color */
-    color: white; /* Set text color to white for contrast */
+    background-color: #131512; 
+    color: white; 
     padding: 10px;
     margin: 0 5px;
     font-size: 16px;
@@ -201,7 +200,7 @@ h1 {
 }
 
 .quantity-controls button:hover {
-    background-color: #3a3a3a; /* Optional: darken the color on hover */
+    background-color: #3a3a3a; 
 }
 
 .btn {
@@ -264,7 +263,7 @@ footer {
 </head>
 <body>
 
-<!-- Navbar -->
+
 <nav>
     <div>
         <a href="dashboard.php"><img src="../assets/images/picture1.jpg" alt="Logo"></a>
@@ -281,14 +280,14 @@ footer {
 <div class="content-wrapper">
     <h1> AMARYLIS LAUNDRY</h1>
 
-    <!-- Display success message if exists -->
+    
     <?php if ($message): ?>
         <div class="message"><?php echo $message; ?></div>
     <?php endif; ?>
 
-    <!-- Laundry Categories -->
+    
     <section id="services">
-        <!-- Normal Wash Category -->
+        
         <h2 class="category-title">Normal Wash</h2>
         <div class="services-list">
             <?php
@@ -319,7 +318,7 @@ footer {
             ?>
         </div>
 
-        <!-- Dry Cleaning Category -->
+        
         <h2 class="category-title">Dry Cleaning</h2>
         <div class="services-list">
             <?php
@@ -349,7 +348,7 @@ footer {
             ?>
         </div>
 
-        <!-- Ironing Category -->
+        
         <h2 class="category-title">Ironing</h2>
         <div class="services-list">
             <?php
@@ -381,13 +380,13 @@ footer {
     </section>
 </div>
 
-<!-- Popup -->
+
 <div id="popup" class="popup">
     <span class="close-btn" onclick="document.getElementById('popup').style.display='none'">&times;</span>
     <p>Services added to cart!</p>
 </div>
 
-<!-- Footer -->
+
 <footer>
     <p>&copy; 2025 SM Company. All rights reserved.</p>
 </footer>

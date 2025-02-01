@@ -11,7 +11,7 @@ require 'includes/db.php';
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        /* Basic Reset */
+ 
         * {
             margin: 0;
             padding: 0;
@@ -29,11 +29,11 @@ require 'includes/db.php';
             justify-content: center;
             min-height: 100vh;
             text-align: center;
-            padding-top: 80px; /* To ensure content doesn't overlap with navbar */
-            scroll-behavior: smooth; /* Enable smooth scrolling */
+            padding-top: 80px; 
+            scroll-behavior: smooth; 
         }
 
-        /* Navbar */
+
         nav {
             width: 100%;
             padding: 15px 20px;
@@ -121,10 +121,10 @@ require 'includes/db.php';
             background-color: #e67e22;
         }
 
-        /* Location Section */
+
         #location {
             width: 100%;
-            background-color: #fdf6e3; /* Soft yellow background */
+            background-color: #fdf6e3; 
             padding: 50px 20px;
             color: #333;
             margin-top: 50px;
@@ -161,7 +161,7 @@ require 'includes/db.php';
             margin-bottom: 10px;
         }
 
-        /* About Us Section */
+     
         #about {
             width: 100%;
             background-color: #fff;
@@ -203,7 +203,7 @@ require 'includes/db.php';
             color: #f39c12;
         }
 
-        /* Footer */
+   
         footer {
             background-color: #333;
             color: #fff;
@@ -215,23 +215,22 @@ require 'includes/db.php';
         footer p {
             margin: 0;
             font-size: 1.2rem;
-            font-family: 'Montserrat', sans-serif; /* Change footer font */
+            font-family: 'Montserrat', sans-serif; 
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+ 
     <nav>
         <img src="assets/images/logo.png" alt="Laundry Management System Logo">
         <ul>
             <li><a href="admin/dashboard.php">Admin</a></li>
             <li><a href="login.php?role=customer">Customer</a></li>
             <li><a href="#about">About Us</a></li>
-            <li><a href="#location">Location</a></li> <!-- Add link to Location -->
+            <li><a href="#location">Location</a></li> 
         </ul>
     </nav>
 
-    <!-- Main Content -->
     <div class="container">
         <h1>Welcome to Amarilys Laundry</h1>
         <p>Which one are you?</p>
@@ -242,7 +241,7 @@ require 'includes/db.php';
         </div>
     </div>
 
-    <!-- Location Section -->
+
     <div id="location">
         <h2>Our Locations</h2>
         <div class="location-content">
@@ -257,7 +256,7 @@ This location is situated near the Machang District in Kelantan, Malaysia.</li>
         </div>
     </div>
 
-    <!-- About Us Section -->
+
     <div id="about">
         <h2>About Us</h2>
         <div class="about-images">
@@ -279,7 +278,7 @@ This location is situated near the Machang District in Kelantan, Malaysia.</li>
         </div>
     </div>
 
-    <!-- Footer -->
+
     <footer>
         <p>&copy; 2025 Amarylis Laundry. All rights reserved.</p>
     </footer>

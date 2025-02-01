@@ -1,20 +1,20 @@
 <?php
 session_start();
-include('includes/db.php'); // Ensure this file contains a valid `$conn` connection
+include('includes/db.php'); 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize and validate input data
+
     $name = htmlspecialchars(trim($_POST['name']));
     $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
 
-    // Validate email format
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format.";
     } else {
-        $password_hash = password_hash($password, PASSWORD_DEFAULT); // Hash the password
+        $password_hash = password_hash($password, PASSWORD_DEFAULT); 
 
-        // Check if email already exists (Use `users` table, not `customer`)
+
         $query = "SELECT * FROM users WHERE email = ?";
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, "s", $email);
@@ -24,16 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (mysqli_num_rows($result) > 0) {
             $error = "Email already exists! Please choose another one.";
         } else {
-            // Insert new customer into the database (Use `users` table)
+
             $insert_query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'customer')";
             $insert_stmt = mysqli_prepare($conn, $insert_query);
             mysqli_stmt_bind_param($insert_stmt, "sss", $name, $email, $password_hash);
 
             if (mysqli_stmt_execute($insert_stmt)) {
-                $_SESSION['user_id'] = mysqli_insert_id($conn); // Store user ID in session
-                $_SESSION['role'] = 'customer'; // Set role
+                $_SESSION['user_id'] = mysqli_insert_id($conn); 
+                $_SESSION['role'] = 'customer'; 
 
-                // Redirect user to the customer dashboard
+
                 header("Location: customer/dashboard.php");
                 exit();
             } else {

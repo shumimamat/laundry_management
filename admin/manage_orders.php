@@ -1,17 +1,17 @@
 <?php
-// Include the database connection
+
 include '../includes/db.php';
 
-// Handle status update
+
 $success_message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['status'])) {
-    $order_id = intval($_POST['order_id']); // Sanitize input
-    $status = $_POST['status']; // Direct value from dropdown
+    $order_id = intval($_POST['order_id']);
+    $status = $_POST['status']; 
 
-    // Validate status
+
     $valid_statuses = ['Pending', 'In Progress', 'Completed', 'Cancelled'];
     if (in_array($status, $valid_statuses)) {
-        // Update the order status in the database
+       
         $stmt = $conn->prepare("UPDATE orders SET status = ? WHERE id = ?");
         $stmt->bind_param("si", $status, $order_id);
         if ($stmt->execute()) {
@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order_id'], $_POST['s
     }
 }
 
-// Fetch all orders
 $orders = $conn->query("
     SELECT o.id, u.name AS customer_name, s.service_name, 
            o.weight * s.price_per_kg AS amount, o.status 
@@ -32,7 +31,7 @@ $orders = $conn->query("
     INNER JOIN services s ON o.service_id = s.id
 ");
 
-// Define order status options
+
 $order_status_options = ['Pending', 'In Progress', 'Completed', 'Cancelled'];
 ?>
 
@@ -51,10 +50,9 @@ $order_status_options = ['Pending', 'In Progress', 'Completed', 'Cancelled'];
             padding: 0;
         }
 
-        /* Navbar Styling */
-        /* Navbar Styling */
+        
 nav {
-    background-color: #000100; /* Dark background */
+    background-color: #000100;
     color: #fff;
     padding: 15px 20px;
     display: flex;
@@ -64,7 +62,7 @@ nav {
 }
 
 .nav-left img {
-    height: 50px; /* Adjust logo size */
+    height: 50px;
 }
 
 .nav-center {
@@ -95,10 +93,10 @@ nav {
 }
 
 .nav-center ul li a:hover {
-    background-color: #6f7769; /* Slightly darker greenish-gray */
+    background-color: #6f7769; 
 }
 
-/* Centering Logout Button */
+
 .nav-right {
     display: flex;
     justify-content: center;
@@ -111,11 +109,11 @@ nav {
     padding: 8px 15px;
     border-radius: 4px;
     transition: background 0.3s;
-    background-color: #d9534f; /* Red logout button */
+    background-color: #d9534f; 
 }
 
 .nav-right a:hover {
-    background-color: #c9302c; /* Darker red */
+    background-color: #c9302c; 
 }
 
 
@@ -203,7 +201,7 @@ nav {
         }
     </style>
     <script>
-        // Auto-hide alert
+
         setTimeout(() => {
             const alertBox = document.querySelector('.alert');
             if (alertBox) alertBox.style.display = 'none';
@@ -231,7 +229,7 @@ nav {
     <h1>Manage Customer Orders</h1>
     <h2>Existing Orders</h2>
 
-    <!-- Display success message -->
+
     <?php if ($success_message): ?>
         <div class="alert">
             <?= htmlspecialchars($success_message) ?>

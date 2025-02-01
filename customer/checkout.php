@@ -2,7 +2,7 @@
 session_start();
 include('../includes/db.php');
 
-// Ensure the user is logged in
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -10,13 +10,13 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Check if the cart is empty
+
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     header("Location: cart.php");
     exit();
 }
 
-// Validate if the user exists in the 'users' table
+
 $query = "SELECT id FROM users WHERE id = ?";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "i", $user_id);
@@ -33,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $payment_method = $_POST['payment_method'];
 
         foreach ($_SESSION['cart'] as $item) {
-            $service_name = trim($item['service_name']); // Trim to avoid extra spaces
+            $service_name = trim($item['service_name']); 
             $quantity = $item['quantity'];
 
-            // Query to fetch service details
+          
             $service_query = "SELECT id, price_per_kg FROM services WHERE service_name = ? LIMIT 1";
             $stmt_service = mysqli_prepare($conn, $service_query);
             mysqli_stmt_bind_param($stmt_service, "s", $service_name);
@@ -46,18 +46,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($service) {
                 $service_id = $service['id'];
-                $weight = $quantity * $service['price_per_kg']; // Calculate the total price for the order
+                $weight = $quantity * $service['price_per_kg']; 
 
-                // Insert order and ensure order_id is obtained
+                
                 $order_query = "INSERT INTO orders (customer_id, service_id, weight, status, payment_status, order_date) 
                                 VALUES (?, ?, ?, 'Pending', 'Pending', NOW())";
                 $stmt_order = mysqli_prepare($conn, $order_query);
                 mysqli_stmt_bind_param($stmt_order, "iid", $user_id, $service_id, $weight);
 
                 if (mysqli_stmt_execute($stmt_order)) {
-                    $order_id = mysqli_insert_id($conn); // Get the last inserted order ID
+                    $order_id = mysqli_insert_id($conn); 
 
-                    // Insert payment only if the order is successful
+                    
                     $payment_query = "INSERT INTO payments (order_id, payment_method, payment_status) 
                                       VALUES (?, ?, 'Pending')";
                     $stmt_payment = mysqli_prepare($conn, $payment_query);
@@ -72,15 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit();
                 }
             } else {
-                echo "<pre>Service '$service_name' not found in the database!</pre>"; // Debugging line
+                echo "<pre>Service '$service_name' not found in the database!</pre>"; 
                 exit();
             }
         }
 
-        // Empty the cart after successful order placement
+       
         unset($_SESSION['cart']);
 
-        // Redirect to the orders page
+       
         echo "<script>alert('Payment successful!'); window.location.href = 'myorder.php';</script>";
         exit();
     } else {

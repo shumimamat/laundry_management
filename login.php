@@ -1,24 +1,23 @@
 <?php
 session_start();
-include('includes/db.php'); // Include the database connection
+include('includes/db.php'); 
 
-// Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] === 'admin') {
-        header("Location: admin/dashboard.php"); // Redirect to admin dashboard if logged in as admin
+        header("Location: admin/dashboard.php"); 
         exit();
     } elseif ($_SESSION['role'] === 'customer') {
-        header("Location: customer/dashboard.php"); // Redirect to customer dashboard if logged in as customer
+        header("Location: customer/dashboard.php"); 
         exit();
     }
 }
 
-// Handle form submission
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
-    // Query to check user credentials
+
     $query = "SELECT * FROM users WHERE email = ?";  
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, 's', $email);
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = mysqli_stmt_get_result($stmt);
 
     if ($user = mysqli_fetch_assoc($result)) {
-        if ($password === $user['password']) {  // Direct password comparison
+        if ($password === $user['password']) {  
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
 
@@ -45,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!-- HTML for the login form -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #fef4d1; /* Soft yellow background */
+            background-color: #fef4d1; 
             margin: 0;
             padding: 0;
         }

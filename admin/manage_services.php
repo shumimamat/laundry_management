@@ -8,7 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
 
 include('../includes/db.php');
 
-// Check if there is a status in the URL (for success or error messages)
+
 if (isset($_GET['status'])) {
     $status = $_GET['status'];
     $message = $_GET['message'];
@@ -21,15 +21,15 @@ if (isset($_GET['status'])) {
     ";
 }
 
-// Handle form submission for adding a new service
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Get form data
+ 
     $serv_name = mysqli_real_escape_string($conn, $_POST['serv_name']);
     $serv_price = mysqli_real_escape_string($conn, $_POST['serv_price']);
     $serv_desc = mysqli_real_escape_string($conn, $_POST['serv_desc']);
-    $serv_availability = 'Available'; // Default availability value
+    $serv_availability = 'Available'; 
     
-    // Insert the new service into the database
+
     $query = "INSERT INTO services (service_name, price_per_kg, description, availability) 
               VALUES ('$serv_name', '$serv_price', '$serv_desc', '$serv_availability')";
     
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Services</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <!-- Add your custom CSS styles here -->
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -58,9 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
        
-       /* Navbar Styling */
+
 nav {
-    background-color: #000100; /* Updated background color */
+    background-color: #000100; 
     color: #000100;
     padding: 15px 20px;
     display: flex;
@@ -71,7 +71,7 @@ nav {
 }
 
 .nav-left img {
-    height: 50px; /* Adjust logo size */
+    height: 50px;
 }
 
 .nav-center {
@@ -102,10 +102,10 @@ nav {
 }
 
 .nav-center ul li a:hover {
-    background-color: #6f7769; /* Slightly darker greenish-gray */
+    background-color: #6f7769; 
 }
 
-/* Centering Logout Button */
+
 .nav-right {
     display: flex;
     justify-content: center;
@@ -118,11 +118,11 @@ nav {
     padding: 8px 15px;
     border-radius: 4px;
     transition: background 0.3s;
-    background-color: #d9534f; /* Red logout button */
+    background-color: #d9534f; 
 }
 
 .nav-right a:hover {
-    background-color: #c9302c; /* Darker red */
+    background-color: #c9302c; 
 }
 
 
@@ -216,7 +216,7 @@ nav {
 </head>
 <body>
 
-   <!-- Navbar -->
+   
 <nav>
     <div class="nav-left">
         <img src="../assets/images/logo.png" alt="Logo">
@@ -237,7 +237,7 @@ nav {
 <div class="container">
     <h2>Manage Services</h2>
 
-    <!-- Add new service form -->
+    
     <form method="POST" action="manage_services.php">
         <label for="serv_name">Service Name:</label>
         <input type="text" id="serv_name" name="serv_name" required>
@@ -251,7 +251,7 @@ nav {
         <button type="submit">Add Service</button>
     </form>
 
-    <!-- Display existing services in a table -->
+    
     <table>
         <thead>
             <tr>
@@ -264,7 +264,7 @@ nav {
         </thead>
         <tbody>
             <?php
-            // Fetch services from the database
+            
             $query = "SELECT * FROM services";
             $result = mysqli_query($conn, $query);
             if (mysqli_num_rows($result) > 0) {

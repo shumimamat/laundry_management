@@ -2,15 +2,15 @@
 session_start();
 include('../includes/db.php');
 
-// Check if user is logged in
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id']; // Get the logged-in user's ID
+$user_id = $_SESSION['user_id']; 
 
-// Fetch orders for the logged-in user
+
 $query = "SELECT o.id AS order_id, o.order_date, o.status, o.payment_status, 
                  s.service_name, o.weight, p.payment_method 
           FROM orders o
@@ -31,7 +31,7 @@ $order_result = mysqli_stmt_get_result($stmt);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Orders</title>
     <style>
-        /* General Styling */
+       
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -39,7 +39,7 @@ $order_result = mysqli_stmt_get_result($stmt);
             background-color: #f8f9fa;
         }
 
-        /* Navigation Bar */
+    
         nav {
             background-color: rgba(0, 0, 0, 0.8);
             color: white;
@@ -77,7 +77,7 @@ $order_result = mysqli_stmt_get_result($stmt);
             color: #f39c12;
         }
 
-        /* Main Container */
+        
         .order-container {
             max-width: 800px;
             margin: 30px auto;
@@ -94,7 +94,7 @@ $order_result = mysqli_stmt_get_result($stmt);
             margin-bottom: 20px;
         }
 
-        /* Order List Styling */
+        
         .order-list {
             list-style: none;
             padding: 0;
@@ -118,7 +118,7 @@ $order_result = mysqli_stmt_get_result($stmt);
             text-align: center;
         }
 
-        /* Status Colors */
+        
         .status-pending {
             background-color: #f39c12;
             color: white;
@@ -134,7 +134,7 @@ $order_result = mysqli_stmt_get_result($stmt);
             color: white;
         }
 
-        /* Footer Styling */
+   
         footer {
             text-align: center;
             padding: 20px;
@@ -146,7 +146,7 @@ $order_result = mysqli_stmt_get_result($stmt);
 </head>
 <body>
 
-<!-- Navbar -->
+
 <nav>
     <div>
         <a href="dashboard.php"><img src="../assets/images/picture1.jpg" alt="Logo"></a>
@@ -160,7 +160,7 @@ $order_result = mysqli_stmt_get_result($stmt);
     </ul>
 </nav>
 
-<!-- Order Container -->
+
 <div class="order-container">
     <h2>Your Orders</h2>
 
@@ -184,7 +184,7 @@ $order_result = mysqli_stmt_get_result($stmt);
     <?php endif; ?>
 </div>
 
-<!-- Footer -->
+
 <footer>
     <p>&copy; 2025 SM Company. All rights reserved.</p>
 </footer>

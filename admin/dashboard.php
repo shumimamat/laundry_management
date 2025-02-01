@@ -1,26 +1,25 @@
 <?php 
 session_start();
 
-// Check if user is logged in as 'admin', if not redirect to login.php
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../login.php"); // Redirect to login page if not logged in as admin
-    exit(); // Stop further execution
+    header("Location: ../login.php"); 
+    exit(); 
 }
 
-// Database connection
+
 include('../db.php');
 
-// Fetch Pending Orders
+
 $pendingOrdersQuery = "SELECT COUNT(*) AS pending_orders FROM orders WHERE status = 'Pending'";
 $pendingOrdersResult = mysqli_query($conn, $pendingOrdersQuery);
 $pendingOrders = mysqli_fetch_assoc($pendingOrdersResult)['pending_orders'];
 
-// Fetch Completed Orders
 $completedOrdersQuery = "SELECT COUNT(*) AS completed_orders FROM orders WHERE status = 'Completed'";
 $completedOrdersResult = mysqli_query($conn, $completedOrdersQuery);
 $completedOrders = mysqli_fetch_assoc($completedOrdersResult)['completed_orders'];
 
-// Fetch Net Profit (Calculating based on completed orders and their associated services)
+
 $netProfitQuery = "SELECT SUM(o.weight * s.price_per_kg) AS net_profit 
                    FROM orders o
                    JOIN services s ON o.service_id = s.id
@@ -29,12 +28,11 @@ $netProfitQuery = "SELECT SUM(o.weight * s.price_per_kg) AS net_profit
 $netProfitResult = mysqli_query($conn, $netProfitQuery);
 $netProfit = mysqli_fetch_assoc($netProfitResult)['net_profit'];
 
-// If net profit is null, set it to 0
+
 if ($netProfit === null) {
     $netProfit = 0;
 }
 
-// Fetch Total Services
 $totalServicesQuery = "SELECT COUNT(*) AS total_services FROM services";
 $totalServicesResult = mysqli_query($conn, $totalServicesQuery);
 $totalServices = mysqli_fetch_assoc($totalServicesResult)['total_services'];
@@ -47,18 +45,17 @@ $totalServices = mysqli_fetch_assoc($totalServicesResult)['total_services'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <style>
-        /* General Body Styling */
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #dcdcdc; /* Updated background */
+            background-color: #dcdcdc; 
         }
 
-        /* Navbar Styling */
-        /* Navbar Styling */
+     
 nav {
-    background-color: #000100; /* New background color */
+    background-color: #000100; 
     color: #fff;
     padding: 15px 20px;
     display: flex;
@@ -101,7 +98,7 @@ nav {
 }
 
 .nav-center ul li a:hover {
-    background-color: #6f7769; /* Slightly darker greenish-gray */
+    background-color: #6f7769; 
 }
 
 .nav-right {
@@ -116,17 +113,17 @@ nav {
     padding: 8px 15px;
     border-radius: 4px;
     transition: background 0.3s;
-    background-color: #d9534f; /* Red logout button */
+    background-color: #d9534f; 
 }
 
 .nav-right a:hover {
-    background-color: #c9302c; /* Darker red */
+    background-color: #c9302c; 
 }
 
 
         .dashboard-container {
             max-width: 1200px;
-            margin: 100px auto 50px; /* Added margin to prevent overlap with navbar */
+            margin: 100px auto 50px; 
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
@@ -140,7 +137,7 @@ nav {
             margin-bottom: 20px;
         }
 
-        /* Dashboard Links */
+      
         .dashboard-links {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -163,7 +160,7 @@ nav {
         .link-box:hover {
             transform: scale(1.05);
             background-color: #6a6e67 
-            ; /* Slightly darker blue on hover */
+            ; 
         }
 
         .link-box a {
@@ -172,7 +169,7 @@ nav {
             font-size: 18px;
         }
 
-        /* Dashboard Stats */
+        
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -203,7 +200,7 @@ nav {
             color: #333;
         }
 
-        /* Stat Title and Value Customization */
+     
         .stat-box .value {
             font-size: 30px;
             font-weight: bold;
@@ -213,7 +210,7 @@ nav {
 </head>
 <body>
 
-    <!-- Navbar -->
+  
     <nav>
     <div class="nav-left">Admin Dashboard</div>
     <div class="nav-center">
@@ -227,17 +224,17 @@ nav {
     </div>
 </nav>
 
-    <!-- Dashboard Section -->
+
     <div class="dashboard-container">
         <h2>Welcome to the Admin Dashboard</h2>
 
-        <!-- Dashboard Links -->
+     
         <div class="dashboard-links">
             <a href="manage_services.php" class="link-box">Manage Services</a>
             <a href="manage_orders.php" class="link-box">Manage Orders</a>
         </div>
 
-        <!-- Dashboard Stats -->
+ 
         <div class="stats">
             <div class="stat-box">
                 <h4>Pending Orders</h4>
